@@ -22,9 +22,9 @@ jobs:
       - name: Build JAR inside lenses/
         run: |
           cd lenses
-           chmod +x mvnw   # ✅ Make mvnw executable
+          chmod +x mvnw
           ./mvnw clean package -DskipTests
-            ls -l target
+          ls -l target/
       
 
       - name: Set up Docker Buildx
@@ -39,7 +39,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./lenses
           file: ./lenses/Dockerfile
           push: true
           tags: harshitha2802/lenses-service:latest

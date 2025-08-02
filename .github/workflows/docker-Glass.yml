@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push Glass Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./Glass
           file: ./Glass/Dockerfile
           push: true
           tags: harshitha2802/glass-service:latest

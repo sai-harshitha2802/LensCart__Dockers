@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Checkout source code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Java 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -24,7 +24,7 @@ jobs:
           cd frames
           chmod +x mvnw
           ./mvnw clean package -DskipTests
-          ls -l target  # Optional: confirm JAR is created
+          ls -l target/
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push Frames Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./frames
           file: ./frames/Dockerfile
           push: true
           tags: harshitha2802/frames-service:latest
