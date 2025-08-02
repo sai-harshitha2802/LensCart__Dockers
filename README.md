@@ -15,14 +15,22 @@ git clone <repository-url>
 cd LensCart_Backend_Dockers-master
 ```
 
-### 2. Configure Environment
+### 2. Skip Tests (Default)
+Tests are automatically skipped during build. To run tests:
+```bash
+# Run tests for specific service
+cd <service-folder>
+./mvnw test -DskipTests=false
+```
+
+### 4. Configure Environment
 ```bash
 # Copy and edit environment file
 cp .env.example .env
 # Edit .env file with your secure passwords
 ```
 
-### 3. Start All Services
+### 5. Start All Services
 ```bash
 docker-compose -f docker-compose-lenses.yml up -d
 ```
