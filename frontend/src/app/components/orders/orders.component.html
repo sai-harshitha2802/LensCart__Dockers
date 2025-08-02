@@ -1,0 +1,103 @@
+<!-- <app-header></app-header>
+<div class="order-process-container">
+
+    <div class="step-indicator">
+        <div class="step" [class.active]="currentStep >= 1">Order Summary</div>
+        <div class="step" [class.active]="currentStep >= 2">Payment</div>
+        <div class="step" [class.active]="currentStep >= 3">Order Confirmation</div>
+    </div>
+
+
+    <div *ngIf="currentStep === 1" class="order-summary">
+        <h3>🧾 Order Summary</h3>
+
+        <div class="cart-items">
+            <div class="cart-item" *ngFor="let item of cartItems">
+
+                <img [src]="item.imageUrl" alt="{{ item.productId }}" class="product-img" />
+                <div class="item-details">
+                    <h4>{{ item.productId }}</h4>
+
+                    <p>₹{{ item.price }} x {{ item.quantity }}</p>
+                    <p class="item-total">Total: ₹{{ item.quantity * item.price }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="amount-box">
+            <p><strong>Total Amount:</strong> ₹{{ totalAmount }}</p>
+        </div>
+        <div class="address-section">
+            <label for="address">Enter Delivery Address:</label>
+            <textarea id="address" [(ngModel)]="address" rows="4" placeholder="Enter delivery address..."
+                class="address-textarea" required></textarea>
+        </div>
+        <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+
+        <button class="next-btn" (click)="goToNextStep()">Proceed to Payment</button>
+    </div>
+    <div *ngIf="currentStep === 2" class="payment-step">
+        <h3>💳 Payment</h3>
+        <p>Total Amount: ₹{{ totalAmount }}</p>
+
+        <input type="number" [(ngModel)]="paymentAmount" placeholder="Enter payment amount" />
+
+        <div *ngIf="paymentError" class="error-msg">{{ paymentError }}</div>
+
+        <button class="next-btn" (click)="goToNextStep()"
+            [disabled]="paymentAmount <= 0 || paymentAmount !== totalAmount">
+            Make Payment
+        </button>
+        <button class="prev-btn" (click)="goToPreviousStep()">Previous</button>
+    </div>
+
+
+    <div *ngIf="currentStep === 3" class="order-history">
+        <h3>🎉 Order Confirmation</h3>
+        <div *ngIf="paymentSuccess">
+            <p>Your payment of ₹{{ paymentAmount }} was successful!</p>
+            <p>Your order has been confirmed and will be shipped soon!</p>
+        </div>
+        <button class="finish-btn" (click)="finishOrder()">Finish</button>
+    </div>
+</div> -->
+<app-header></app-header>
+
+<div class="order-steps-wrapper">
+    <div class="step-card" *ngIf="currentStep === 1">
+        <div class="step-header">🧾 Step 1: Order Summary</div>
+        <div *ngFor="let item of cartItems" class="order-item">
+            <img [src]="item.imageUrl" alt="product" />
+            <div>
+                <h4>{{ item.productId }}</h4>
+                <p>₹{{ item.price }} x {{ item.quantity }}</p>
+                <strong>Total: ₹{{ item.quantity * item.price }}</strong>
+            </div>
+        </div>
+        <div class="step-footer">
+            <p><strong>Total: ₹{{ totalAmount }}</strong></p>
+            <textarea [(ngModel)]="address" placeholder="Enter delivery address..."></textarea>>
+            <div *ngIf="errorMessage" class="error-msg">{{ errorMessage }}</div>
+            <button (click)="goToNextStep()">Next ➡️</button>
+        </div>
+    </div>
+
+    <div class="step-card" *ngIf="currentStep === 2">
+        <div class="step-header">💳 Step 2: Payment</div>
+        <p>Pay: ₹{{ totalAmount }}</p>
+        <input type="number" [(ngModel)]="paymentAmount" placeholder="Enter amount" />
+        <div *ngIf="paymentError" class="error-msg">{{ paymentError }}</div>
+        <div class="step-footer">
+            <button class="back-btn" (click)="goToPreviousStep()">⬅️ Back</button>
+            <button [disabled]="paymentAmount !== totalAmount || paymentAmount <= 0" (click)="goToNextStep()">Pay
+                Now</button>
+        </div>
+    </div>
+
+    <div class="step-card" *ngIf="currentStep === 3">
+        <div class="step-header">🎉 Step 3: Confirmation</div>
+        <p>Thank you! Payment of ₹{{ paymentAmount }} received.</p>
+        <p>Your order will be shipped soon.</p>
+        <button (click)="finishOrder()">Finish ✅</button>
+    </div>
+</div>

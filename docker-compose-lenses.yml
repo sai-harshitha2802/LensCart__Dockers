@@ -144,6 +144,24 @@ services:
       - spring.datasource.username=${DB_USERNAME}
       - spring.datasource.password=${DB_PASSWORD}
 
+  frontend:
+    build: ./frontend
+    container_name: lenscart-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - eureka-server
+      - lenses-service
+      - frames-service
+      - glass-service
+      - customer-admin-service
+      - sunglasses-service
+      - cart-service
+      - orders-service
+      - product-service
+    networks:
+      - lenscart-net
+
   mysql-db:
     image: mysql:8.0
     container_name: mysql-db

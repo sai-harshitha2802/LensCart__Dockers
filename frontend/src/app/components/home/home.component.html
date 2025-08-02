@@ -1,0 +1,53 @@
+<!-- Header -->
+<app-header></app-header>
+
+<!-- Hero Banner -->
+<div class="hero-banner text-white text-center d-flex align-items-center justify-content-center">
+  <div>
+    <h1 class="display-4 fw-bold">Welcome to LensCart</h1>
+    <p class="lead">Your one-stop shop for stylish eyewear</p>
+    <a routerLink="/products" class="btn btn-light px-4 mt-3">Shop Now</a>
+  </div>
+</div>
+
+<!-- Shop by Category -->
+<div class="container my-5">
+  <h2 class="text-center mb-4">Shop by Category</h2>
+  <div class="row text-center">
+    <div class="col-md-3 mb-4" routerLink="/frames">
+      <div class="card shadow-sm">
+        <img src="assets/image/frame.png" class="card-img-top" alt="Frames">
+        <div class="card-body">
+          <h5>Frames</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4" routerLink="/lenses">
+      <div class="card shadow-sm">
+        <img src="assets/image/lenses.png" class="card-img-top" alt="Lenses">
+        <div class="card-body">
+          <h5>Lenses</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4" routerLink="/glasses">
+      <div class="card shadow-sm">
+        <img src="assets/image/glass.png" class="card-img-top" alt="Glasses">
+        <div class="card-body">
+          <h5>Glasses</h5>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-4" routerLink="/sunglasses">
+      <div class="card shadow-sm">
+        <img src="assets/image/sunglass.png" class="card-img-top" alt="Sunglasses">
+        <div class="card-body">
+          <h5>Sunglasses</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<app-footer></app-footer>
