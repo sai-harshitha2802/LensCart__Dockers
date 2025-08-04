@@ -382,12 +382,12 @@ export class OrdersComponent implements OnInit {
 
       // Verify payment on backend
       this.orderService.verifyPayment(verificationRequest).subscribe({
-        next: (res) => {
+        next: (res: any) => {
           this.paymentSuccess = true;
           this.currentStep = 3;
           this.cartService.clearCart(this.customerId).subscribe();
         },
-        error: (err) => {
+        error: (err: any) => {
           this.paymentError = 'Payment verification failed.';
           console.error(err);
         }

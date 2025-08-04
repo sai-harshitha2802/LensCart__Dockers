@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Frames JAR
         run: |
-          cd frames
+          cd backend/frames
           chmod +x mvnw
           ./mvnw clean package -DskipTests
           ls -l target/
@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push Frames Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./frames
-          file: ./frames/Dockerfile
+          context: ./backend/frames
+          file: ./backend/frames/Dockerfile
           push: true
           tags: harshitha2802/frames-service:latest

@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Customer-Admin JAR
         run: |
-          cd customer-admin-service
+          cd backend/customer-admin-service
           chmod +x mvnw
           ./mvnw clean package -DskipTests
           ls -l target
@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push Customer-Admin Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./customer-admin-service
-          file: ./customer-admin-service/Dockerfile
+          context: ./backend/customer-admin-service
+          file: ./backend/customer-admin-service/Dockerfile
           push: true
           tags: harshitha2802/customer-admin-service:latest

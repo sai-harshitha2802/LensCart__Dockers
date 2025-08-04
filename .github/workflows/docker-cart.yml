@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Cart JAR
         run: |
-          cd cart
+          cd backend/cart
           chmod +x mvnw
           ./mvnw clean package -DskipTests
           ls -l target
@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push Cart Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./cart
-          file: ./cart/Dockerfile
+          context: ./backend/cart
+          file: ./backend/cart/Dockerfile
           push: true
           tags: harshitha2802/cart-service:latest

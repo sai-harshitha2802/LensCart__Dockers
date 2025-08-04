@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Sunglasses JAR
         run: |
-          cd sunglassmodule
+          cd backend/sunglassmodule
           chmod +x mvnw
           ./mvnw clean package -DskipTests
           ls -l target
@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push Sunglasses Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./sunglassmodule
-          file: ./sunglassmodule/Dockerfile
+          context: ./backend/sunglassmodule
+          file: ./backend/sunglassmodule/Dockerfile
           push: true
           tags: harshitha2802/sunglasses-service:latest

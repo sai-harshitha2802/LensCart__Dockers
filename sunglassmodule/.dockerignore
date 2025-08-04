@@ -1,5 +1,0 @@
-*.iml
-*.log
-.git
-.idea
-!target/*.jar

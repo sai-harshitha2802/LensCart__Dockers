@@ -21,7 +21,7 @@ jobs:
 
       - name: Build FinalOrder JAR
         run: |
-          cd finalorderUpdated
+          cd backend/finalorderUpdated
           chmod +x mvnw
           ./mvnw clean package -DskipTests
           ls -l target
@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push FinalOrder Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./finalorderUpdated
-          file: ./finalorderUpdated/Dockerfile
+          context: ./backend/finalorderUpdated
+          file: ./backend/finalorderUpdated/Dockerfile
           push: true
           tags: harshitha2802/order-service:latest

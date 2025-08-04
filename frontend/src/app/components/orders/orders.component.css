@@ -212,7 +212,7 @@ button:disabled {
   }
 }
 
-orders: CSS: .order-steps-wrapper {
+.order-steps-wrapper {
   max-width: 600px;
   margin: 30px auto;
   padding: 10px;

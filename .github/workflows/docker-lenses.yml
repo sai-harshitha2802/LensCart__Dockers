@@ -21,7 +21,7 @@ jobs:
 
       - name: Build JAR inside lenses/
         run: |
-          cd lenses
+          cd backend/lenses
           chmod +x mvnw
           ./mvnw clean package -DskipTests
           ls -l target/
@@ -39,7 +39,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: ./lenses
-          file: ./lenses/Dockerfile
+          context: ./backend/lenses
+          file: ./backend/lenses/Dockerfile
           push: true
           tags: harshitha2802/lenses-service:latest

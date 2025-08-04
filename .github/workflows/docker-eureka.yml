@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Eureka Server JAR
         run: |
-          cd eureka
+          cd backend/eureka
           chmod +x mvnw
           ./mvnw clean package -DskipTests
           ls -l target
@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push Eureka Server Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./eureka
-          file: ./eureka/Dockerfile
+          context: ./backend/eureka
+          file: ./backend/eureka/Dockerfile
           push: true
           tags: harshitha2802/eureka-server:latest

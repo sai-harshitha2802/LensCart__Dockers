@@ -116,11 +116,6 @@ export class OrdersService {
     return this.http.put(url, paymentRequest, this.getHeaders());
   }
 
-  verifyPayment(payload: any): Observable<any> {
-    const url = `${this.BaseUrl}/verify-payment`;
-    return this.http.post(url, payload, this.getHeaders());
-  }
-
 
   getOrders(): Observable<any> {
     return this.http.get(`${this.BaseUrl}/all`, this.getHeaders());
@@ -148,6 +143,11 @@ export class OrdersService {
       {},
       this.getHeaders()
     );
+  }
+
+  verifyPayment(verificationRequest: any): Observable<any> {
+    const url = `${this.BaseUrl}/verify-payment`;
+    return this.http.post(url, verificationRequest, this.getHeaders());
   }
 
 }

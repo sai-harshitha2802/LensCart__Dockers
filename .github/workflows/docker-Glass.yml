@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Glass JAR
         run: |
-          cd Glass
+          cd backend/Glass
           chmod +x mvnw
           ./mvnw clean package -DskipTests
           ls -l target
@@ -38,7 +38,7 @@ jobs:
       - name: Build & Push Glass Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: ./Glass
-          file: ./Glass/Dockerfile
+          context: ./backend/Glass
+          file: ./backend/Glass/Dockerfile
           push: true
           tags: harshitha2802/glass-service:latest
