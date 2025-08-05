@@ -133,8 +133,7 @@ services:
       - server.port=8089
 
   orders-service:
-    build: ./backend/finalorderUpdated
-    image: my-orders-service:latest
+    image: harshitha2802/order-service:latest
     container_name: orders-service
     ports:
       - "8088:8088"
@@ -176,6 +175,23 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./backend/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql-db
+    networks:
+      - lenscart-net
+    environment:
+      PMA_HOST: mysql-db
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
 
 networks:
   lenscart-net:
