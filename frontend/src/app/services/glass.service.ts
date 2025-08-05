@@ -25,17 +25,17 @@ export class GlassService {
   getAllGlasses(): Observable<Glass[]> {
     return this.http.get<Glass[]>(`${this.baseUrl}/all-glasses`);
   }
-  addGlass(glasses: Glass): Observable<Glass> {
-    return this.http.post<Glass>( `${this.baseUrl}/add-glasses`, glasses);
+  addGlass(glass: Glass): Observable<Glass> {
+    return this.http.post<Glass>(`${this.baseUrl}/add-glasses`, glass);
   }
 
-  updateGlass(glasses: Glass): Observable<Glass> {
-    return this.http.put<Glass>(`${this.baseUrl}${glasses.glassId}`, glasses);
+  updateGlass(glass: Glass): Observable<Glass> {
+    return this.http.put<Glass>(`${this.baseUrl}/${glass.glassId}`, glass);
   }
 
   deleteGlass(glassId: string): Observable<void> {
-  return this.http.delete<void>(`${this.baseUrl}/${glassId}`);
-}
+    return this.http.delete<void>(`${this.baseUrl}/${glassId}`);
+  }
 
 
 

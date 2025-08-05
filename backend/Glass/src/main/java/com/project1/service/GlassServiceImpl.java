@@ -52,14 +52,14 @@ public class GlassServiceImpl implements GlassService {
 	    Glass existingGlass = glassRepository.findById(glassId)
 	            .orElseThrow(() -> new GlassNotFoundException("Glass not found with ID: " + glassId));
 
-	    // Preserve the original ID
-	    String existingId = existingGlass.getGlassId();
-
-	    // Map updated fields from DTO to entity (excluding ID)
-	    modelMapper.map(glassDTO, existingGlass);
-
-	    // Ensure the original ID remains unchanged
-	    existingGlass.setGlassId(existingId);
+	    // Update fields manually to avoid ID conflicts
+	    existingGlass.setGlassName(glassDTO.getGlassName());
+	    existingGlass.setBrand(glassDTO.getBrand());
+	    existingGlass.setPrice(glassDTO.getPrice());
+	    existingGlass.setType(glassDTO.getType());
+	    existingGlass.setQuantity(glassDTO.getQuantity());
+	    existingGlass.setPowerRange(glassDTO.getPowerRange());
+	    existingGlass.setGlassImage(glassDTO.getGlassImage());
 
 	    Glass savedGlass = glassRepository.save(existingGlass);
 	    return modelMapper.map(savedGlass, GlassDTO.class);
