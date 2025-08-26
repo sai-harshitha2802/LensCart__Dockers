@@ -1,6 +1,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { Glass, GlassService } from 'src/app/services/glass.service';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
   selector: 'app-glass-management',
@@ -12,16 +14,7 @@ export class GlassesManagementComponent implements OnInit {
   glasses: Glass[] = [];
   glassData: Glass = this.resetData();
   isEditMode = false;
-    newGlass: Glass = {
-    glassId: '',
-    brand: '',
-    glassImage: '',
-    glassName: '',
-    powerRange: 0,
-    type: '',
-    price: 0,
-    quantity: 0
-  };
+
 
   constructor(private glassService: GlassService) {}
 
@@ -30,17 +23,36 @@ export class GlassesManagementComponent implements OnInit {
   }
 
   loadGlasses(): void {
-    this.glassService.getAllGlasses().subscribe(data => this.glasses = data);
+    this.glassService.getAllGlasses().pipe(
+      catchError(error => {
+        console.error('Error loading glasses:', error);
+        return of([]);
+      })
+    ).subscribe(data => this.glasses = data);
   }
 
   onSubmit(): void {
     if (this.isEditMode) {
-      this.glassService.updateGlass(this.glassData).subscribe(() => {
+      if (!this.glassData.glassId) {
+        console.error('Glass ID is required for update');
+        return;
+      }
+      this.glassService.updateGlass(this.glassData).pipe(
+        catchError(error => {
+          console.error('Error updating glass:', error);
+          return of(null);
+        })
+      ).subscribe(() => {
         this.loadGlasses();
         this.resetForm();
       });
     } else {
-      this.glassService.addGlass(this.glassData).subscribe(() => {
+      this.glassService.addGlass(this.glassData).pipe(
+        catchError(error => {
+          console.error('Error adding glass:', error);
+          return of(null);
+        })
+      ).subscribe(() => {
         this.loadGlasses();
         this.resetForm();
       });
@@ -54,7 +66,12 @@ export class GlassesManagementComponent implements OnInit {
 
   deleteGlass(glassId: string): void {
     if (confirm('Are you sure you want to delete this glass?')) {
-      this.glassService.deleteGlass(glassId).subscribe(() => this.loadGlasses());
+      this.glassService.deleteGlass(glassId).pipe(
+        catchError(error => {
+          console.error('Error deleting glass:', error);
+          return of(null);
+        })
+      ).subscribe(() => this.loadGlasses());
     }
   }
 

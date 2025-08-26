@@ -29,14 +29,30 @@ export class GlassService {
     return this.http.post<Glass>(`${this.baseUrl}/add-glasses`, glass);
   }
 
-  updateGlass(glass: Glass): Observable<Glass> {
-    return this.http.put<Glass>(`${this.baseUrl}/${glass.glassId}`, glass);
+  // updateGlass(glass: Glass): Observable<Glass> {
+  //   if (!glass.glassId) {
+  //     throw new Error('Glass ID is required for update');
+  //   }
+  //   return this.http.put<Glass>(`${this.baseUrl}/${glass.glassId}`, glass);
+  // }
+
+  // deleteGlass(glassId: string): Observable<void> {
+  //   if (!glassId) {
+  //     throw new Error('Glass ID is required for delete');
+  //   }
+  //   return this.http.delete<void>(`${this.baseUrl}/${glassId}`);
+  // }
+updateGlass(glass: Glass): Observable<Glass> {
+  if (!glass.glassId) {
+    throw new Error('Glass ID is required for update');
   }
+  return this.http.put<Glass>(`${this.baseUrl}/${glass.glassId}`, glass);
+}
 
-  deleteGlass(glassId: string): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${glassId}`);
+deleteGlass(glassId: string): Observable<void> {
+  if (!glassId) {
+    throw new Error('Glass ID is required for delete');
   }
-
-
-
+  return this.http.delete<void>(`${this.baseUrl}/${glassId}`);
+}
 }

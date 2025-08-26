@@ -349,64 +349,42 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  initiatePayment(): void {
-  this.paymentError = '';
-
-  if (this.paymentAmount <= 0) {
-    this.paymentError = 'Amount must be greater than 0.';
-    return;
-  }
-
-  const roundedEntered = Math.round(this.paymentAmount * 100) / 100;
-  const roundedTotal = Math.round(this.totalAmount * 100) / 100;
-
-  if (roundedEntered !== roundedTotal) {
-    this.paymentError = `Amount must match the total: ₹${this.totalAmount}`;
-    return;
-  }
-
-  // Create Razorpay options
-  const options = {
-    key: 'rzp_test_BMmv05Uui74eLR', // 🔁 Replace with your real Razorpay key ID
-    amount: this.paymentAmount * 100, // in paise
-    currency: 'INR',
-    name: 'LensCart',
-    description: 'Product Payment',
-    handler: (response: any) => {
-      // This is called on successful payment
-      const verificationRequest = {
-        razorpayOrderId: response.razorpay_order_id,
-        razorpayPaymentId: response.razorpay_payment_id,
-        razorpaySignature: response.razorpay_signature
-      };
-
-      // Verify payment on backend
-      this.orderService.verifyPayment(verificationRequest).subscribe({
-        next: (res: any) => {
-          this.paymentSuccess = true;
-          this.currentStep = 3;
-          this.cartService.clearCart(this.customerId).subscribe();
-        },
-        error: (err: any) => {
-          this.paymentError = 'Payment verification failed.';
-          console.error(err);
-        }
-      });
-    },
-   prefill: {
-  name: localStorage.getItem('customerName') || 'Test User',
-  email: localStorage.getItem('customerEmail') || 'test@example.com',
-  contact: localStorage.getItem('customerPhone') || '9876543210'
-},
-
-    theme: {
-      color: '#3399cc'
+ initiatePayment(): void {
+    this.paymentError = '';
+ 
+    if (this.paymentAmount <= 0) {
+      this.paymentError = 'Amount must be greater than 0.';
+      return;
     }
-  };
-
-  const rzp = new Razorpay(options);
-  rzp.open();
-}
+ 
+    const roundedEntered = Math.round(this.paymentAmount * 100) / 100;
+    const roundedTotal = Math.round(this.totalAmount * 100) / 100;
+ 
+    if (roundedEntered !== roundedTotal) {
+      this.paymentError = `Amount must match the total: ₹${this.totalAmount}`;
+      return;
+    }
+ 
+    const paymentRequest = { amount: roundedEntered };
+ 
+    this.orderService.makePayment(this.orderId, paymentRequest).subscribe({
+      next: () => {
+        this.paymentSuccess = true;
+        this.paymentError = '';
+ 
+        this.cartService.clearCart(this.customerId).subscribe({
+          next: () => console.log('Cart cleared after payment.'),
+          error: (err) => console.error('Failed to clear cart:', err)
+        });
+ 
+        this.currentStep = 3;
+      },
+      error: (err) => {
+        this.paymentError = 'Payment failed. Please try again.';
+        console.error('Payment Error:', err);
+      }
+    });
+  }
 
   deletePendingOrder(): void {
     if (this.orderId !== -1) {
